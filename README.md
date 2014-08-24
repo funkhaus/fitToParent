@@ -48,7 +48,7 @@ You can also feed in a custom box size to fit the element in, like this:
 I've also added the ability to set a CSS class of "size-parent" to a parent element, and it will then use that parent element for the box size. A full example of that:
 
     // HTML like this
-    <div id="wrapper" class="size-wrapper">
+    <div id="wrapper" class="size-parent">
     	<div class="media">
             <iframe width="720" height="405" src="//player.vimeo.com/video/19223989"></iframe>
     	</div>
