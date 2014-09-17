@@ -8,10 +8,10 @@ I have really improved on the answer from @TrueBlueAussie (from here: http://sta
 All options:
 
 	jQuery('#wrapper iframe').fitToParent({
-	    height_offset: 0, // Int. Put some space around the video
-	    width_offset: 0, // Int. Put some space around the video
-	    box_height: , // Int. Will look for .size-parent, or fallback to parent size
-	    box_width: // Int. Will look for .size-parent, or fallback to parent size
+	    height_offset: 0, 	// Int. Put some space around the video
+	    width_offset: 0, 	// Int. Put some space around the video
+	    box_height: , 		// Int. Will look for .size-parent, or fallback to parent size
+	    box_width: , 		// Int. Will look for .size-parent, or fallback to parent size
 	    callback: function(newWidth, newHeight){
 			
 	    }
