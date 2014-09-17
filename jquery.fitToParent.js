@@ -19,6 +19,7 @@ jQuery.fn.fitToParent = function (options) {
 				width_offset: 0,
 				box_height: $box.height(),
 				box_width: $box.width(),
+				callback: null
 		}, options );
 		
 		// Setup box and element widths
@@ -43,6 +44,11 @@ jQuery.fn.fitToParent = function (options) {
 		// Set new size of element
         $el.width(newWidth);
 		$el.height(newHeight); 
+		
+		// Fire callback
+		if (typeof(settings.callback) == "function") {
+			settings.callback(newWidth, newHeight);
+		}
 
     });
 };

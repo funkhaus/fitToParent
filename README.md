@@ -5,6 +5,17 @@ A jQuery plugin that will resize an element to fit it's parent container, and ma
 
 I have really improved on the answer from @TrueBlueAussie (from here: http://stackoverflow.com/questions/18838963/proportionally-scale-iframe-to-fit-in-a-div-using-jquery) over time.
 
+All options:
+	jQuery('#wrapper iframe').fitToParent({
+	    height_offset: 0, // Int. Put some space around the video
+	    width_offset: 0, // Int. Put some space around the video
+	    box_height: , // Int. Will look for .size-parent, or fallback to parent size
+	    box_width: // Int. Will look for .size-parent, or fallback to parent size
+	    callback: function(newWidth, newHeight){
+			
+	    }
+	});
+
 Assuming you have HTML of this:
 
     <div id="wrapper">
