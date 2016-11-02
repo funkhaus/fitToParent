@@ -28,7 +28,7 @@ jQuery.fn.fitToParent = function (options) {
         var parentWidth = settings.box_width - settings.width_offset;
         var parentHeight = settings.box_height - settings.height_offset;
 
-		// Maintin aspect ratio
+		// Maintain aspect ratio
         var aspect = width / height;
         var parentAspect = parentWidth / parentHeight;
 

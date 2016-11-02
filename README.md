@@ -1,108 +1,68 @@
-fitToParent
-===========
+## What is it?
 
-A jQuery plugin that will resize an element to fit it's parent container, and maintain it's orginal aspect ratio.
+fitToParent is a jQuery plugin that will resize an element to fit its parent container while maintaining its orginal aspect ratio.
 
-I have really improved on the answer from @TrueBlueAussie (from here: http://stackoverflow.com/questions/18838963/proportionally-scale-iframe-to-fit-in-a-div-using-jquery) over time.
+fitToParent requires an element with `width` and `height` attributes.
 
-All options:
+[Example](http://codepen.io/SaFrMo/pen/eBORPa) - A vertically and horizontally centered iframe that dynamically resizes with the window.
 
-	jQuery('#wrapper iframe').fitToParent({
-	    height_offset: 0, 	// Int. Put some space around the video
-	    width_offset: 0, 	// Int. Put some space around the video
-	    box_height: , 		// Int. Will look for .size-parent, or fallback to parent size
-	    box_width: , 		// Int. Will look for .size-parent, or fallback to parent size
-	    callback: function(newWidth, newHeight){
-			
-	    }
-	});
+## How
 
-Assuming you have HTML of this:
+```js
+// Basic initialization
+jQuery('iframe').fitToParent();
 
-    <div id="wrapper">
-        <iframe width="720" height="405" src="//player.vimeo.com/video/19223989"></iframe>
-    </div>
-
-The most basic way to call the plugin is like this:
-
-    jQuery('#wrapper iframe').fitToParent();
-
-But I'll often set #wrapper to be close to window height and width, like this:
-
-    // Get window height and width
-    var winHeight = jQuery(window).height();
-    var winWidth = jQuery(window).width();
+// Make sure to update on resize
+jQuery(window).on('resize', function(){
+    // Basic usage
+    jQuery('iframe').fitToParent();
     
-    // Set wrapper height/width to that of window
-    jQuery('#wrapper').height(winHeight).width(winWidth);
-    
-    // Size Iframe
-    jQuery('#wrapper iframe').fitToParent({
-    	height_offset: 100, // Put some space around the video
-    	width_offset: 100, // Put some space around the video
-    });
+    // OR optimized
+    requestAnimationFrame( jQuery('iframe').fitToParent() );
+});
+```
 
+When determining the parent to fit to, fitToParent looks for (in this order):
+1. Sizes passed into `box_height` and `box_width` (see 'Options' below)
+1. The size of the closest element with the class `size-parent`, retrieved using [closest()](https://api.jquery.com/closest/)
+1. The size of the parent element
 
-You can also feed in a custom box size to fit the element in, like this:
+For example:
 
-    // Get window height and width
-    var winHeight = jQuery(window).height();
-    var winWidth = jQuery(window).width();
-    
-    // Size element
-    jQuery('#wrapper iframe').fitToParent({
-    	height_offset: 100, // Put some space around the video
-    	width_offset: 100, // Put some space around the video
-    	box_height: winHeight, // Force use of this box size
-    	box_width: winWidth // Force use of this box size
-    });
+```html
+<div class="size-parent">
+  <div class="extra-wrapper">
+    <iframe ... ></iframe>
+  </div>
+</div>
+```
 
-I've also added the ability to set a CSS class of "size-parent" to a parent element, and it will then use that parent element for the box size. A full example of that:
+Calling `jQuery('iframe').fitToParent( {box_height: 200} )` will use 200px as the box height and the width of `.size-parent` as the box width.
 
-    // HTML like this
-    <div id="wrapper" class="size-parent">
-    	<div class="media">
-            <iframe width="720" height="405" src="//player.vimeo.com/video/19223989"></iframe>
-    	</div>
-    </div>
-     
-    // jQuery like this
-    jQuery('.media iframe').fitToParent();    
+Calling `jQuery('iframe').fitToParent()` will use `.size-parent`'s dimensions, not those of `extra-wrapper`.
 
-If you don't set a .size-parent, it will fallback to the element parent. If you set the box_height/box_width parameter, then those override everything obviously. 	
-
-Now, to show how powerful this can be, try this for a vertically centered, horizontal centered aspect ratio correct iFrame!
-
-    // CSS like this
-    #wrapper {
-    	text-align: center;
-    	display: table-cell;
-    	vertical-align: middle;
+## Options
+```js
+jQuery('target-element').fitToParent({
+    height_offset: 0,   // Int. Put some space around the video
+    width_offset: 0,    // Int. Put some space around the video
+    box_height: ,       // Int. Will look for .size-parent, or fallback to parent size
+    box_width: ,        // Int. Will look for .size-parent, or fallback to parent size
+    callback: function(newWidth, newHeight){
+      // Fires after fitting is complete
     }
-    #wrapper iframe {
-    	display: inline-block;
-    }
-    
-    // HTML like this
-    <div id="wrapper" class="size-wrapper">
-    	<iframe width="720" height="405" src="//player.vimeo.com/video/19223989"></iframe>
-    </div>
-    
-    // jQuery like this
-    // Get window height and width
-    var winHeight = jQuery(window).height();
-    var winWidth = jQuery(window).width();
-    
-    // Size wrapper
-    jQuery('#wrapper').height( winHeight ).width( winWidth );
-    
-    // Size element
-    jQuery('#wrapper iframe').fitToParent({
-    	height_offset: 200, // Put some space around the video
-    	width_offset: 200, // Put some space around the video
-    });
-    
-    // Fit iFrame to wrapper
-    jQuery('#wrapper iframe').fitToParent();
+});
+```
 
-In real life, I wrap the jQuery in a function, and then call that function on window resize for true responsive iFrames!
+## More Info
+By Drew Baker, based on improvements to [the answer from @TrueBlueAussie](http://stackoverflow.com/questions/18838963/proportionally-scale-iframe-to-fit-in-a-div-using-jquery) developed over time.
+
+--------
+
+__fitToParent__
+
+http://funkhaus.us
+
+Version: 1.1
+
+Requires jQuery
