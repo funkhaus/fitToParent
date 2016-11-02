@@ -1,69 +1,54 @@
-/*!
-* jQuery fitToParent
-* https://github.com/drewbaker/fitToParent
-* Drew Baker, Sander Moolin
-* MIT license
-*/
-(function($) {
+jQuery.fn.fitToParent = function (options) {
 
-    $.fn.fitToParent = function (options) {
+    this.each(function () {
 
-        requestAnimationFrame(function() {
+		// Cache the resize element
+        var $el = jQuery(this);
 
-            this.each(function () {
+        // Get size parent (box to fit element in)
+        var $box;
+        if( $el.closest('.size-parent').length ) {
+	        $box = $el.closest('.size-parent');
+        } else {
+	        $box = $el.parent();
+        }
 
-        		// Cache the resize element
-                var $el = $(this);
+		// These are the defaults.
+		var settings = jQuery.extend({
+				height_offset: 0,
+				width_offset: 0,
+				box_height: $box.height(),
+				box_width: $box.width(),
+				callback: null
+		}, options );
 
-                // Get size parent (box to fit element in)
-                var $box;
-                if( $el.closest('.size-parent').length ) {
-        	        $box = $el.closest('.size-parent');
-                } else {
-        	        $box = $el.parent();
-                }
+		// Setup box and element widths
+        var width = $el.attr('width');
+        var height = $el.attr('height');
+        var parentWidth = settings.box_width - settings.width_offset;
+        var parentHeight = settings.box_height - settings.height_offset;
 
-        		// These are the defaults.
-        		var settings = $.extend({
-    				heightOffset: 0,
-    				widthOffset: 0,
-    				boxHeight: $box.height(),
-    				boxWidth: $box.width(),
-    				callback: null
-        		}, options );
+		// Maintin aspect ratio
+        var aspect = width / height;
+        var parentAspect = parentWidth / parentHeight;
 
-        		// Setup box and element widths
-                var width = $el.width();
-                var height = $el.height();
-                var parentWidth = settings.boxWidth - settings.widthOffset;
-                var parentHeight = settings.boxHeight - settings.heightOffset;
+		// Resize to fit box
+        if (aspect > parentAspect) {
+            newWidth = parentWidth;
+            newHeight = (newWidth / aspect);
+        } else {
+            newHeight = parentHeight;
+            newWidth = newHeight * aspect;
+        }
 
-        		// Maintain aspect ratio
-                var aspect = width / height;
-                var parentAspect = parentWidth / parentHeight;
+		// Set new size of element
+        $el.width(newWidth);
+		$el.height(newHeight);
 
-        		// Resize to fit box
-                if (aspect > parentAspect) {
-                    newWidth = parentWidth;
-                    newHeight = (newWidth / aspect);
-                } else {
-                    newHeight = parentHeight;
-                    newWidth = newHeight * aspect;
-                }
+		// Fire callback
+		if (typeof(settings.callback) == "function") {
+			settings.callback(newWidth, newHeight);
+		}
 
-        		// Set new size of element
-                $el.width(newWidth);
-            	$el.height(newHeight);
-
-            	// Fire callback
-            	if (typeof(settings.callback) == "function") {
-            		settings.callback(newWidth, newHeight);
-            	}
-
-            });
-
-        }.bind(this));
-
-    }
-
-}(jQuery));
+    });
+};
