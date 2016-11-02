@@ -23,6 +23,7 @@ jQuery(window).on('resize', function(){
 ```
 
 When determining the parent to fit to, fitToParent looks for (in this order):
+
 1. Sizes passed into `box_height` and `box_width` (see 'Options' below)
 1. The size of the closest element with the class `size-parent`, retrieved using [closest()](https://api.jquery.com/closest/)
 1. The size of the parent element
