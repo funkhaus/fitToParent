@@ -24,9 +24,9 @@ When determining the parent to fit to, fitToParent looks for (in this order):
 1. The size of the closest element with the class `size-parent`, retrieved using [closest()](https://api.jquery.com/closest/)
 1. If no `.size-parent` found, then it uses the size of the parent element
 
-Calling `jQuery('iframe').fitToParent( {boxHeight: 200} )` will use 200px as the box height and the width of `.size-parent` as the box width.
-
 Calling `jQuery('iframe').fitToParent()` will use the above logic to figure out the box size.
+
+Calling `jQuery('iframe').fitToParent({ boxHeight: 200 })` will use 200px as the box height and the width of `.size-parent` as the box width.
 
 ## Example
 An example of a common Vimeo embed sized and centered in the window
@@ -51,14 +51,14 @@ An example of a common Vimeo embed sized and centered in the window
 ```
 
 ```js
-    // Basic usage    
-    jQuery(document).ready(function(){
-        jQuery('iframe').fitToParent();
-    }):
+// Basic usage    
+jQuery(document).ready(function(){
+    jQuery('iframe').fitToParent();
+}):
 
-    jQuery(window).on('resize', function(){
-        jQuery('iframe').fitToParent();
-    });    
+jQuery(window).on('resize', function(){
+    jQuery('iframe').fitToParent();
+});    
 ```
 
 ## Options
