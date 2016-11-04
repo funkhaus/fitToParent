@@ -2,6 +2,15 @@ jQuery.fn.fitToParent = function (options) {
 
     this.each(function () {
 
+		// These are the defaults.
+		var settings = jQuery.extend({
+				heightOffset: 0,
+				widthOffset: 0,
+				boxHeight: $box.height(),
+				boxWidth: $box.width(),
+				callback: null
+		}, options );
+
 		// Cache the resize element
         var $el = jQuery(this);
 
@@ -13,23 +22,24 @@ jQuery.fn.fitToParent = function (options) {
 	        $box = $el.parent();
         }
 
-		// These are the defaults.
-		var settings = jQuery.extend({
-				height_offset: 0,
-				width_offset: 0,
-				box_height: $box.height(),
-				box_width: $box.width(),
-				callback: null
-		}, options );
-
 		// Setup box and element widths
         var width = $el.attr('width');
         var height = $el.attr('height');
-        var parentWidth = settings.box_width - settings.width_offset;
-        var parentHeight = settings.box_height - settings.height_offset;
+
+        if( !width || !height ) {
+            var width = $el.width();
+            var height = $el.height();
+        }
+
+        var parentWidth = settings.boxWidth - settings.widthOffset;
+        var parentHeight = settings.boxHeight - settings.heightOffset;
 
 		// Maintain aspect ratio
-        var aspect = width / height;
+		var aspect = $el.data('aspect');
+		if(!aspect) {
+            aspect = width / height;
+            $el.data('aspect', aspect);
+		}
         var parentAspect = parentWidth / parentHeight;
 
 		// Resize to fit box

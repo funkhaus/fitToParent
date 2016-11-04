@@ -1,10 +1,6 @@
 ## What is it?
 
-fitToParent is a jQuery plugin that will resize an element to fit its parent container while maintaining its orginal aspect ratio.
-
-fitToParent requires an element with `width` and `height` attributes.
-
-[Example](http://codepen.io/SaFrMo/pen/eBORPa) - A vertically and horizontally centered iframe that dynamically resizes with the window.
+fitToParent is a jQuery plugin that will resize an element to fit its parent container while maintaining its original aspect ratio.
 
 ## How
 
@@ -17,40 +13,49 @@ jQuery(window).on('resize', function(){
     // Basic usage
     jQuery('iframe').fitToParent();
     
-    // OR optimized
+    // Or optimized
     requestAnimationFrame( jQuery('iframe').fitToParent() );
 });
 ```
 
 When determining the parent to fit to, fitToParent looks for (in this order):
 
-1. Sizes passed into `box_height` and `box_width` (see 'Options' below)
+1. Sizes passed into `boxHeight` and `boxWidth` (see 'Options' below)
 1. The size of the closest element with the class `size-parent`, retrieved using [closest()](https://api.jquery.com/closest/)
-1. The size of the parent element
+1. If no `.size-parent` found, then it uses the size of the parent element
 
-For example:
+Calling `jQuery('iframe').fitToParent( {boxHeight: 200} )` will use 200px as the box height and the width of `.size-parent` as the box width.
+
+Calling `jQuery('iframe').fitToParent()` will use the above logic to figure out the box size.
+
+For example, it works best if you use flexbox on `.stage`, and then `jQuery('iframe').fitToParent()`.    
 
 ```html
-<div class="size-parent">
-  <div class="extra-wrapper">
+<div class="stage">
     <iframe ... ></iframe>
-  </div>
 </div>
 ```
 
-Calling `jQuery('iframe').fitToParent( {box_height: 200} )` will use 200px as the box height and the width of `.size-parent` as the box width.
-
-Calling `jQuery('iframe').fitToParent()` will use `.size-parent`'s dimensions, not those of `extra-wrapper`.
+```css
+.stage {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-content: center;
+    align-items: center;        
+}
+```
 
 ## Options
 ```js
 jQuery('target-element').fitToParent({
-    height_offset: 0,   // Int. Put some space around the video
-    width_offset: 0,    // Int. Put some space around the video
-    box_height: ,       // Int. Will look for .size-parent, or fallback to parent size
-    box_width: ,        // Int. Will look for .size-parent, or fallback to parent size
+    heightOffset: 0,   // (int) Put some space around the video
+    widthOffset: 0,    // (int) Put some space around the video
+    boxHeight: ,       // (int) Will look for .size-parent, or fallback to parent size
+    boxWidth: ,        // (int) Will look for .size-parent, or fallback to parent size
     callback: function(newWidth, newHeight){
-      // Fires after fitting is complete
+        // Fires after fitting is complete
     }
 });
 ```
@@ -64,6 +69,6 @@ __fitToParent__
 
 http://funkhaus.us
 
-Version: 1.1
+Version: 1.2
 
 Requires jQuery
