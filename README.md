@@ -2,7 +2,7 @@
 
 fitToParent is a jQuery plugin that will resize an element to fit its parent container while maintaining its original aspect ratio.
 
-## How
+## Basics
 
 ```js
 // Basic initialization
@@ -28,16 +28,19 @@ Calling `jQuery('iframe').fitToParent( {boxHeight: 200} )` will use 200px as the
 
 Calling `jQuery('iframe').fitToParent()` will use the above logic to figure out the box size.
 
-For example, it works best if you use flexbox on `.stage`, and then `jQuery('iframe').fitToParent()`.    
+## Example
+An example of a common Vimeo embed sized and centered in the window
 
 ```html
 <div class="stage">
-    <iframe ... ></iframe>
+    <iframe src="https://player.vimeo.com/video/20744468" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 </div>
 ```
 
 ```css
 .stage {
+    height: 100vh;
+    width: 100%;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -47,11 +50,22 @@ For example, it works best if you use flexbox on `.stage`, and then `jQuery('ifr
 }
 ```
 
+```js
+    // Basic usage    
+    jQuery(document).ready(function(){
+        jQuery('iframe').fitToParent();
+    }):
+
+    jQuery(window).on('resize', function(){
+        jQuery('iframe').fitToParent();
+    });    
+```
+
 ## Options
 ```js
 jQuery('target-element').fitToParent({
-    heightOffset: 0,   // (int) Put some space around the video
-    widthOffset: 0,    // (int) Put some space around the video
+    heightOffset: 0,   // (int) Put some space around the element
+    widthOffset: 0,    // (int) Put some space around the element
     boxHeight: ,       // (int) Will look for .size-parent, or fallback to parent size
     boxWidth: ,        // (int) Will look for .size-parent, or fallback to parent size
     callback: function(newWidth, newHeight){
