@@ -83,6 +83,6 @@ __fitToParent__
 
 http://funkhaus.us
 
-Version: 1.2
+Version: 1.2.1
 
 Requires jQuery
