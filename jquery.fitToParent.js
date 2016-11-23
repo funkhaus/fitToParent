@@ -1,6 +1,20 @@
+/*!
+* jQuery fitToParent; version: 1.2.1
+* https://github.com/drewbaker/fitToParent
+*/
 jQuery.fn.fitToParent = function (options) {
 
     this.each(function () {
+        // Vars
+        var $el = jQuery(this);
+        var $box;
+
+        // Get size parent (box to fit element in)
+        if( $el.closest('.size-parent').length ) {
+	        $box = $el.closest('.size-parent');
+        } else {
+	        $box = $el.parent();
+        }
 
 		// These are the defaults.
 		var settings = jQuery.extend({
@@ -10,17 +24,6 @@ jQuery.fn.fitToParent = function (options) {
 				boxWidth: $box.width(),
 				callback: null
 		}, options );
-
-		// Cache the resize element
-        var $el = jQuery(this);
-
-        // Get size parent (box to fit element in)
-        var $box;
-        if( $el.closest('.size-parent').length ) {
-	        $box = $el.closest('.size-parent');
-        } else {
-	        $box = $el.parent();
-        }
 
 		// Setup box and element widths
         var width = $el.attr('width');
