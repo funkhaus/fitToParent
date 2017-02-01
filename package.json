@@ -1,0 +1,27 @@
+{
+  "name": "fit-to-parent",
+  "version": "1.0.0",
+  "description": "A jQuery plugin that will resize an element to fit its parent container, while maintaining its orginal aspect ratio.",
+  "main": "jquery.fitToParent.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drewbaker/fitToParent.git"
+  },
+  "keywords": [
+    "jquery",
+    "resize",
+    "element",
+    "container",
+    "aspect",
+    "ratio"
+  ],
+  "author": "Drew Baker",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/drewbaker/fitToParent/issues"
+  },
+  "homepage": "https://github.com/drewbaker/fitToParent#readme"
+}
