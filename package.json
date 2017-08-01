@@ -27,16 +27,6 @@
     "url": "https://github.com/funkhaus/fitToParent/issues"
   },
   "homepage": "https://github.com/funkhaus/fitToParent#readme",
-  "jspm": {
-    "shim": {
-      "fitToParent": {
-        "deps": [
-          "jquery"
-        ],
-        "exports": "fitToParent"
-      }
-    }
-  },
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-preset-latest": "^6.24.1",
