@@ -101,13 +101,14 @@ if ( !hasWindow() ){ module.exports = fitToParent }
 else {
 
     // attach to lib if possible, default to global
-    const $  = window.jQuery || window.Zepto
-    const attach = $ ? $.fn : window
-    attach.fitToParent = function(ops){
-        this.each(function(){
-            fitToParent({ element: this, ...ops })
-            return this
-        })
-    }
+    const $ = window.jQuery || window.Zepto
+    if ( $ ) {
+        $.fn.fitToParent = function(ops){
+            this.each(function(){
+                fitToParent({ element: this, ...ops })
+                return this
+            })
+        }
+    } else { window.fitToParent = fitToParent }
 
 }
