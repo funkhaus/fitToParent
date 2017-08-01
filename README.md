@@ -1,39 +1,95 @@
 ## What is it?
 
-fitToParent is a jQuery plugin that will resize an element to fit its parent container while maintaining its original aspect ratio.
+fitToParent is a tool that will resize a DOM element to fit its parent container while maintaining its original aspect ratio. Kind of like `background-size: contain;` for anything.
+
+## Installation
+
+Just grab `fitToParent.min.js` from this repo and include it in the head of your page. If using with jQuery or Zepto, make sure fitToParent is called after the core library.
+
+If you're use NPM or yarn:
+`npm install fit-to-parent --save`
 
 ## Basics
 
-```js
-// Basic initialization
-jQuery('iframe').fitToParent();
+If you have an iframe that needs to fit to its parent element:
 
-// Make sure to update on resize
-jQuery(window).on('resize', function(){
-    // Basic usage
-    jQuery('iframe').fitToParent();
-    
-    // Or optimized
-    requestAnimationFrame( jQuery('iframe').fitToParent() );
+```js
+var vid = document.querySelector('iframe');
+
+// sets iframe size
+fitToParent(vid);
+
+// Most of the time we will need to update on resize as well
+window.addEventListener('resize', function(){
+    fitToParent(vid);
 });
 ```
 
-When determining the parent to fit to, fitToParent looks for (in this order):
+You can either pass a DOM element to fitToParent, like the example above, or you can pass an object of options including the element like so:
+```js
+fitToParent({
+    element: vid,
+    heightOffset: 200
+})
+```
 
-1. Sizes passed into `boxHeight` and `boxWidth` (see 'Options' below)
-1. The size of the closest element with the class `size-parent`, retrieved using [closest()](https://api.jquery.com/closest/)
-1. If no `.size-parent` found, then it uses the size of the parent element
+When using jQuery or Zepto, fitToParent will just attach itself as a plugin:
 
-Calling `jQuery('iframe').fitToParent()` will use the above logic to figure out the box size.
+```js
+$('iframe').fitToParent();
+$(window).on('resize', function(){
+    $('iframe').fitToParent();
+});
+```
 
-Calling `jQuery('iframe').fitToParent({ boxHeight: 200 })` will use 200px as the box height and the width of `.size-parent` as the box width.
+### Aspect Ratio
+
+When sizing the element, fitToParent will need to know the aspect ratio of the element. Unless explicitly set, fitToParent will attempt to calculate the ratio of the element automatically. This happens once the first time it's called on that particular element, and then it will use the calculated value each consecutive call.
+
+When determining the ratio for a single element, fitToParent will run in this order:
+
+1. Ratio set manually in options (see 'Options' below)
+1. Ratio defined as a data attribute on the element, as the property 'aspect'
+1. Calculated ratio using the sizes passed to `elHeight` and `elWidth` (see 'Options' below)
+1. Calculated ratio using the `height` and `width` attributes set directly on the element
+1. Calculated ratio using the intended `height` and `width` of the element as set in css
+1. If none of these options are available, fitToParent will measure the height and width of the element directly as rendered in the DOM and calculate the ratio from that
+
+__examples__:
+
+for this markup:
+```html
+<div class="stage">
+    <iframe src="https://vimeo...." width="640" height="360"></iframe>
+</div>
+```
+
+Calling `$('iframe').fitToParent()` will calculate the ratio based on attributes, so it will come up with 1.77 (which is 640 / 360).
+
+Calling `$('iframe').fitToParent({ elWidth: 1920, elHeight: 800  })` will calculate with the provided dimensions and come up with 2.4
+
+Calling `$('iframe').fitToParent({ ratio: 2 })` will use the provided value of 2.
+
+### Parent element
+
+When determining the size of the parent to fit to, fitToParent looks in this order:
+
+1. Sizes passed into `parentHeight` and `parentWidth` (see 'Options' below)
+1. The size of the closest ancestor element with the class `size-parent`
+1. If no `.size-parent` found, then it uses the size of the direct parent element
+
+__examples__:
+
+Calling `$('iframe').fitToParent()` will use the above logic to figure out the intended size.
+
+Calling `$('iframe').fitToParent({ parentHeight: 200 })` will use 200px as the parent height and the width of `.size-parent` as the parent width.
 
 ## Example
 An example of a common Vimeo embed sized and centered in the window
 
 ```html
 <div class="stage">
-    <iframe src="https://player.vimeo.com/video/20744468" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+    <iframe src="https://player.vimeo.com/video/20744468" width="640" height="360"></iframe>
 </div>
 ```
 
@@ -42,40 +98,72 @@ An example of a common Vimeo embed sized and centered in the window
     height: 100vh;
     width: 100%;
     display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: center;
-    align-content: center;
-    align-items: center;        
+}
+iframe {
+    margin: auto;
 }
 ```
 
 ```js
-// Basic usage    
-jQuery(document).ready(function(){
-    jQuery('iframe').fitToParent();
-}):
-
-jQuery(window).on('resize', function(){
-    jQuery('iframe').fitToParent();
-});    
+$(document).ready(function(){
+    $('iframe').fitToParent();
+    $(window).on('resize', function(){
+        $('iframe').fitToParent();
+    });
+}):  
 ```
 
+You can find full examples in the "examples" folder of this repo.
+
 ## Options
+
+Common options for basic use
 ```js
-jQuery('target-element').fitToParent({
-    heightOffset: 0,   // (int) Put some space around the element
-    widthOffset: 0,    // (int) Put some space around the element
-    boxHeight: ,       // (int) Will look for .size-parent, or fallback to parent size
-    boxWidth: ,        // (int) Will look for .size-parent, or fallback to parent size
-    callback: function(newWidth, newHeight){
+fitToParent({
+    element: null,      // (obj) Dom element to set size for
+    heightOffset: 0,    // (int) Put some space around the element
+    widthOffset: 0,     // (int) Put some space around the element
+    callback: function([newWidth, newHeight]){
         // Fires after fitting is complete
-    }
+        this === el
+    },
+    upres: true         // (bool) allows fitToParent to size the target element above initial size
 });
 ```
 
+Less common options when manual overrides are needed:
+```js
+fitToParent({
+    parentHeight: null, // (int) Height to fit to, defaults to parent height
+    parentWidth: null,  // (int) Width to fit to, defaults to parent width
+    elHeight: null,     // (int) Starting height of element, see "aspect Ratio" above for default value
+    elWidth: null,      // (int) Starting width of element, see "aspect Ratio" above for default value
+    ratio: null,        // (float) Intended aspect ratio of element (width/height). Uses info from DOM by default
+})
+```
+
+It's important to note that fitToParent is **not** an asynchronous operation. When used purely as a function it will return its output synchronously. That being said, it's still often useful to have a callback when using fitToParent as a jQuery plugin.
+
+## Advanced usage
+
+fitToParent may be useful to you even in environments with no DOM. There's no reason an element has to be provided as an argument, you could set the numbers manually and only use the return value like this:
+
+```js
+import fitToParent from 'fit-to-parent'
+
+// fitting a square into a 16:9 container
+const [newWidth, newHeight] = fitToParent({
+    ratio: 1,
+    parentWidth: 1920,
+    parentHeight: 1080
+})
+
+// do something with calculated dimensions
+
+```
+
 ## More Info
-By Drew Baker, based on improvements to [the answer from @TrueBlueAussie](http://stackoverflow.com/questions/18838963/proportionally-scale-iframe-to-fit-in-a-div-using-jquery) developed over time.
+Originally by Drew Baker, based on improvements to [the answer from @TrueBlueAussie](http://stackoverflow.com/questions/18838963/proportionally-scale-iframe-to-fit-in-a-div-using-jquery) developed over time.
 
 --------
 
@@ -83,6 +171,4 @@ __fitToParent__
 
 http://funkhaus.us
 
-Version: 1.2.1
-
-Requires jQuery
+Version: 1.3.0

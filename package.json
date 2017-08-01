@@ -1,35 +1,47 @@
 {
   "name": "fit-to-parent",
-  "version": "1.0.0",
-  "description": "A jQuery plugin that will resize an element to fit its parent container, while maintaining its orginal aspect ratio.",
-  "main": "jquery.fitToParent.js",
+  "version": "1.3.0",
+  "description": "A tool that will resize a DOM element to fit its parent container while maintaining the original aspect ratio.",
+  "main": "fitToParent.min.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "babel fitToParent.js | uglifyjs -o fitToParent.min.js",
+    "dev": "babel --watch fitToParent.js -o fitToParent.min.js",
+    "test": "tap test.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/drewbaker/fitToParent.git"
+    "url": "git+https://github.com/funkhaus/fitToParent.git"
   },
   "keywords": [
-    "jquery",
     "resize",
     "element",
     "container",
+    "parent",
     "aspect",
-    "ratio"
+    "ratio",
+    "jquery"
   ],
-  "author": "Drew Baker",
+  "author": "Funkhaus",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/drewbaker/fitToParent/issues"
+    "url": "https://github.com/funkhaus/fitToParent/issues"
   },
-  "homepage": "https://github.com/drewbaker/fitToParent#readme",
+  "homepage": "https://github.com/funkhaus/fitToParent#readme",
   "jspm": {
     "shim": {
       "fitToParent": {
-        "deps": ["jquery"],
+        "deps": [
+          "jquery"
+        ],
         "exports": "fitToParent"
       }
     }
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-latest": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "tap": "^10.7.0",
+    "uglify-js": "^3.0.27"
   }
 }
