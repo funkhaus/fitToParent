@@ -7,7 +7,9 @@ fitToParent is a tool that will resize a DOM element to fit its parent container
 Just grab `fitToParent.min.js` from this repo and include it in the head of your page. If using with jQuery or Zepto, make sure fitToParent is called after the core library.
 
 If you're use NPM or yarn:
-`npm install fit-to-parent --save`
+```
+npm install fit-to-parent --save
+```
 
 ## Basics
 
@@ -120,14 +122,16 @@ You can find full examples in the "examples" folder of this repo.
 Common options for basic use
 ```js
 fitToParent({
-    element: null,      // (obj) Dom element to set size for
+    element: null,      // (obj) Dom element to set size for (not needed with jQuery or Zepto)
     heightOffset: 0,    // (int) Put some space around the element
     widthOffset: 0,     // (int) Put some space around the element
-    callback: function([newWidth, newHeight]){
-        // Fires after fitting is complete
-        this === el
-    },
     upres: true         // (bool) allows fitToParent to size the target element above initial size
+    callback: function([newWidth, newHeight]){
+
+        // Fires after fitting is complete
+        // this === element
+
+    }
 });
 ```
 
