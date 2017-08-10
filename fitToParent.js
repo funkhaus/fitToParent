@@ -18,7 +18,7 @@ const fitToParent = (ops = {}) => {
 
         // find parent to size off of
         const closestSizeParent = (el => {
-            do if ( el.classList.contains('size-parent') ) return el
+            do if ( el && el.classList && el.classList.contains('size-parent') ) return el
             while (el = el && el.parentNode)
         })(el)
         sizeParent = closestSizeParent || el.parentNode
