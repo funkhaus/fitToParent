@@ -28,3 +28,9 @@ code {
 .entry h2 {
     text-align: center;
 }
+nav {
+    padding-top: 20px;
+}
+nav a {
+    margin: 0 10px;
+}

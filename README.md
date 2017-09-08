@@ -166,6 +166,14 @@ const [newWidth, newHeight] = fitToParent({
 
 ```
 
+## Development
+```
+npm install
+npm run dev
+```
+
+Runs a webpack dev server and opens the page.
+
 ## More Info
 Originally by Drew Baker, based on improvements to [the answer from @TrueBlueAussie](http://stackoverflow.com/questions/18838963/proportionally-scale-iframe-to-fit-in-a-div-using-jquery) developed over time.
 
@@ -175,4 +183,6 @@ __fitToParent__
 
 http://funkhaus.us
 
-Version: 1.3.1
+Version: 1.3.2
+
+* 1.3.2 - Updated to webpack-dev-server, organized files
