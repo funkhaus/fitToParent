@@ -2,11 +2,11 @@
   "name": "fit-to-parent",
   "version": "1.3.2",
   "description": "A tool that will resize a DOM element to fit its parent container while maintaining the original aspect ratio.",
-  "main": "fitToParent.min.js",
   "scripts": {
-    "build": "babel ./src/fitToParent.js | uglifyjs -o ./dist/fitToParent.min.js",
+    "build": "babel ./src --out-dir ./lib && webpack --progress",
     "dev": "webpack-dev-server --content-base examples/ --watch --open",
-    "test": "tap test.js"
+    "test": "tap test.js",
+    "postinstall": "npm run build"
   },
   "repository": {
     "type": "git",

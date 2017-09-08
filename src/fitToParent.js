@@ -1,5 +1,5 @@
 /*!
-* jQuery fitToParent; version: 1.3.0
+* jQuery fitToParent; version: 1.3.2
 * https://github.com/funkhaus/fitToParent
 */
 
@@ -90,25 +90,4 @@ const fitToParent = (ops = {}) => {
     return [newWidth, newHeight]
 }
 
-// helper, check if in browser
-const hasWindow = () => {
-    try { return window }
-    catch (e) { return false }
-}
-
-// if no window, export
-if ( !hasWindow() ){ module.exports = fitToParent }
-else {
-
-    // attach to lib if possible, default to global
-    const $ = window.jQuery || window.Zepto
-    if ( $ ) {
-        $.fn.fitToParent = function(ops){
-            this.each(function(){
-                fitToParent({ element: this, ...ops })
-                return this
-            })
-        }
-    } else { window.fitToParent = fitToParent }
-
-}
+module.exports = fitToParent

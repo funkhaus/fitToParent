@@ -1,4 +1,4 @@
-const fitToParent = require('./fitToParent.min')
+const fitToParent = require('./')
 const tap = require('tap')
 
 const [w, h] = fitToParent({

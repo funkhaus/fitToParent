@@ -150,6 +150,17 @@ It's important to note that fitToParent is **not** an asynchronous operation. Wh
 
 ## Advanced usage
 
+### Using with jQuery/Zepto
+If you're using fitToParent in a module system and you want it to act as a jQuery/Zepto plugin:
+
+* Import jQuery first
+* Import fitToParent with: `import 'fitToParent/dist/fitToParent.min'`
+
+This way you'll be able to use fitToParent like this:
+
+`jQuery('.selector').fitToParent({})`
+
+### DOM-less use
 fitToParent may be useful to you even in environments with no DOM. There's no reason an element has to be provided as an argument, you could set the numbers manually and only use the return value like this:
 
 ```js
@@ -174,6 +185,14 @@ npm run dev
 
 Runs a webpack dev server and opens the page.
 
+### Structure
+FitToParent consists of two main sections:
+
+* the `fitToParent` function, a calculator based on aspect ratios, offsets, and other options
+* the `src/webpack-entry.js` functionality, which ties that calculator to jQuery, Zepto, or vanilla JS.
+
+The fitToParent doesn't assume that a browser exists, instead just giving you access to the basic calculator functions of the plugin. `webpack-entry`, on the other hand, assumes a browser environment, plugging into (in order of most to least preferred) jQuery, Zepto, or the window as a global function.
+
 ## More Info
 Originally by Drew Baker, based on improvements to [the answer from @TrueBlueAussie](http://stackoverflow.com/questions/18838963/proportionally-scale-iframe-to-fit-in-a-div-using-jquery) developed over time.
 
@@ -185,4 +204,4 @@ http://funkhaus.us
 
 Version: 1.3.2
 
-* 1.3.2 - Updated to webpack-dev-server, organized files
+* 1.3.2 - Updated to webpack-dev-server, organized files, set up lib/ and dist/

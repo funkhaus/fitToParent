@@ -1,7 +1,8 @@
 var path = require("path");
+var webpack = require("webpack")
 module.exports = {
   entry: {
-    app: ["./src/fitToParent.js"]
+    app: ["./src/webpack-entry.js"]
   },
   output: {
     path: path.resolve(__dirname, "dist"),
@@ -21,5 +22,10 @@ module.exports = {
         }
       }
     ]
-  }
+  },
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin({
+      compress: { warnings: false }
+    })
+  ]
 };
