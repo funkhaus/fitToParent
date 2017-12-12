@@ -1,5 +1,5 @@
 /*!
-* jQuery fitToParent; version: 1.3.2
+* jQuery fitToParent; version: 1.3.4
 * https://github.com/funkhaus/fitToParent
 */
 
