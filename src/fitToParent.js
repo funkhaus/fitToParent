@@ -33,8 +33,8 @@ const fitToParent = (ops = {}) => {
         callback: null,
         ratio: null,
         upres: true,
-        elHeight,
-        elWidth,
+        elHeight: parseInt(elHeight),
+        elWidth: parseInt(elWidth),
         ...ops
     }
 
