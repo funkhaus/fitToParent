@@ -125,7 +125,9 @@ fitToParent({
     element: null,      // (obj) Dom element to set size for (not needed with jQuery or Zepto)
     heightOffset: 0,    // (int) Put some space around the element
     widthOffset: 0,     // (int) Put some space around the element
-    upres: true         // (bool) allows fitToParent to size the target element above initial size
+    upres: true,        // (bool) allows fitToParent to size the target element above initial size
+    maxWidth: Infinity, // (int) max width in pixels
+    maxHeight: Infinity,// (int) max height in pixels
     callback: function([newWidth, newHeight]){
 
         // Fires after fitting is complete
@@ -201,7 +203,3 @@ Originally by Drew Baker, based on improvements to [the answer from @TrueBlueAus
 __fitToParent__
 
 http://funkhaus.us
-
-Version: 1.3.2
-
-* 1.3.2 - Updated to webpack-dev-server, organized files, set up lib/ and dist/

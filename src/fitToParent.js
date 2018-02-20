@@ -35,13 +35,15 @@ const fitToParent = (ops = {}) => {
         upres: true,
         elHeight: parseInt(elHeight),
         elWidth: parseInt(elWidth),
+        maxHeight: Infinity,
+        maxWidth: Infinity,
         ...ops
     }
 
     // set stage
     const stage = {
-        height: settings.parentHeight - settings.heightOffset,
-        width: settings.parentWidth - settings.widthOffset
+        height: Math.min(settings.parentHeight - settings.heightOffset, settings.maxHeight),
+        width: Math.min(settings.parentWidth - settings.widthOffset, settings.maxWidth)
     }
 
     // if upres is false, stage must not exceed el dimensions
